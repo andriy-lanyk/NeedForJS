@@ -29,13 +29,12 @@ function getQuantityElements(heightElement) {
 }
 
 function startGame() {
-  playGame();
   start.classList.add("hidden");
   for (let i = 0; i < getQuantityElements(100); i += 1) {
     const line = document.createElement("div");
     line.classList.add("line");
-    line.style.top = i * 100 + "px";
     line.y = i * 100;
+    line.style.top = line.y + "px";
     gameArea.appendChild(line);
   }
 
@@ -56,7 +55,6 @@ function startGame() {
   settings.x = car.offsetLeft;
   settings.y = car.offsetTop;
   requestAnimationFrame(playGame);
-  console.log("старт");
 }
 
 function playGame() {
@@ -66,24 +64,21 @@ function playGame() {
     if (keys.ArrowLeft && settings.x > 0) {
       settings.x -= settings.speed;
     }
-
-    if (
-      keys.ArrowRight &&
-      settings.x < gameArea.offsetWidth - car.offsetWidth
-    ) {
+    let offsetX = gameArea.offsetWidth - car.offsetWidth;
+    if (keys.ArrowRight && settings.x < offsetX) {
       settings.x += settings.speed;
     }
 
-    if (keys.ArrowUp && setting.y > 0) {
+    if (keys.ArrowUp && settings.y > 0) {
       settings.y -= settings.speed;
     }
-
-    if (
-      keys.ArrowDown &&
-      settings.y < gameArea.offsetHeight - car.offsetHeight
-    ) {
+    let offsetY = gameArea.offsetHeight - car.offsetHeight;
+    if (keys.ArrowDown && settings.y < offsetY) {
       settings.y += settings.speed;
     }
+
+    car.style.left = settings.x + "px";
+    car.style.top = settings.y + "px";
     requestAnimationFrame(playGame);
   }
 }
@@ -104,7 +99,7 @@ function moveRoad() {
     line.y += settings.speed;
     line.style.top = line.y + "px";
 
-    if (line.y >= document.documentElement.clientHeight) {
+    if (line.y > document.documentElement.clientHeight) {
       line.y = -100;
     }
   });

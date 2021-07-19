@@ -3,6 +3,7 @@ const start = document.querySelector(".start");
 const game = document.querySelector(".game");
 const gameArea = document.querySelector(".gameArena");
 const score = document.querySelector(".score");
+const music = new Audio("audio.mp3");
 
 const car = document.createElement("div");
 car.classList.add("car");
@@ -34,6 +35,9 @@ function getRandomEnemy(max) {
 }
 
 function startGame() {
+  music.play();
+  music.volume = 0.1;
+
   start.classList.add("hidden");
   gameArea.innerHTML = "";
   for (let i = 0; i < getQuantityElements(100); i += 1) {
@@ -61,7 +65,6 @@ function startGame() {
   settings.start = true;
   gameArea.appendChild(car);
   let carLeftSettings = gameArea.offsetWidth / 2 - car.offsetWidth / 2;
-  console.log("carLeftSettings: ", carLeftSettings);
   car.style.left = carLeftSettings + "px";
   car.style.top = "auto";
   car.style.bottom = "10px";
@@ -139,6 +142,7 @@ function moveEnemy() {
       settings.start = false;
       start.classList.remove("hidden");
       start.style.top = score.offsetHeight + "px";
+      music.pause();
     }
 
     item.y += settings.speed / 2;

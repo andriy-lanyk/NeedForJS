@@ -1,3 +1,4 @@
+const maxEnemy = 7;
 const start = document.querySelector(".start");
 const game = document.querySelector(".game");
 const gameArea = document.querySelector(".gameArena");
@@ -28,6 +29,10 @@ function getQuantityElements(heightElement) {
   return document.documentElement.clientHeight / heightElement + 1;
 }
 
+function getRandomEnemy(max) {
+  return Math.floor(Math.random() * max + 1);
+}
+
 function startGame() {
   start.classList.add("hidden");
   gameArea.innerHTML = "";
@@ -46,8 +51,9 @@ function startGame() {
     enemy.style.left =
       Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
     enemy.style.top = enemy.y + "px";
-    enemy.style.background =
-      "transparent url(./image/enemy2.png) center / cover no-repeat";
+    enemy.style.background = `transparent url(./image/enemy${getRandomEnemy(
+      maxEnemy
+    )}.png) center / cover no-repeat`;
     gameArea.appendChild(enemy);
   }
 
@@ -93,13 +99,17 @@ function playGame() {
 }
 
 function startRun(e) {
-  e.preventDefault();
-  keys[e.key] = true;
+  if (keys.hasOwnProperty(e.key)) {
+    e.preventDefault();
+    keys[e.key] = true;
+  }
 }
 
 function stopRun(e) {
-  e.preventDefault();
-  keys[e.key] = false;
+  if (keys.hasOwnProperty(e.key)) {
+    e.preventDefault();
+    keys[e.key] = false;
+  }
 }
 
 function moveRoad() {

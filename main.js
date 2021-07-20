@@ -1,4 +1,5 @@
-const maxEnemy = 7;
+const MAX_ENEMY = 7;
+const HEIGHT_ELEM = 150;
 const start = document.querySelector(".start");
 const game = document.querySelector(".game");
 const gameArea = document.querySelector(".gameArena");
@@ -26,37 +27,75 @@ const settings = {
   traffic: 3,
 };
 
+let startSpeed = 0;
+
+function changeLevel(lvl) {
+  switch (lvl) {
+    case "1":
+      settings.traffic = 4;
+      settings.speed = 3;
+      break;
+    case "2":
+      settings.traffic = 3;
+      settings.speed = 4;
+      break;
+    case "3":
+      settings.traffic = 3;
+      settings.speed = 5;
+      break;
+  }
+  startSpeed = settings.speed;
+}
+
 function getQuantityElements(heightElement) {
-  return document.documentElement.clientHeight / heightElement + 1;
+  return gameArea.offsetHeight / heightElement + 1;
 }
 
 function getRandomEnemy(max) {
   return Math.floor(Math.random() * max + 1);
 }
 
-function startGame() {
+function startGame(e) {
+  const target = e.target;
+
+  if (!target.classList.contains("btn")) return;
+
+  const levelGame = target.dataset.levelGame;
+
+  changeLevel(levelGame);
+
   music.play();
   music.volume = 0.1;
 
+  gameArea.style.minHeight =
+    Math.floor(
+      (document.documentElement.clientHeight - HEIGHT_ELEM) / HEIGHT_ELEM
+    ) * HEIGHT_ELEM;
+
   start.classList.add("hidden");
   gameArea.innerHTML = "";
-  for (let i = 0; i < getQuantityElements(100); i += 1) {
+  for (let i = 0; i < getQuantityElements(HEIGHT_ELEM); i += 1) {
     const line = document.createElement("div");
     line.classList.add("line");
-    line.y = i * 100;
+    line.y = i * HEIGHT_ELEM;
     line.style.top = line.y + "px";
+    line.style.height = HEIGHT_ELEM / 2 + "px";
     gameArea.appendChild(line);
   }
 
-  for (let i = 0; i < getQuantityElements(100 * settings.traffic); i += 1) {
+  for (
+    let i = 0;
+    i < getQuantityElements(HEIGHT_ELEM * settings.traffic);
+    i += 1
+  ) {
     const enemy = document.createElement("div");
     enemy.classList.add("enemy");
-    enemy.y = -100 * settings.traffic * (i + 1);
+    enemy.y = -HEIGHT_ELEM * settings.traffic * (i + 1);
     enemy.style.left =
       Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
     enemy.style.top = enemy.y + "px";
     enemy.style.background = `transparent url(./image/enemy${getRandomEnemy(
-      maxEnemy
+      MAX_ENEMY
     )}.png) center / cover no-repeat`;
     gameArea.appendChild(enemy);
   }
@@ -77,6 +116,9 @@ function playGame() {
   if (settings.start) {
     settings.score += settings.speed;
     score.innerHTML = "SCORE<br>" + settings.score;
+
+    settings.speed = startSpeed + Math.floor(settings.score / 5000);
+
     moveRoad();
     moveEnemy();
     if (keys.ArrowLeft && settings.x > 0) {
@@ -121,8 +163,8 @@ function moveRoad() {
     line.y += settings.speed;
     line.style.top = line.y + "px";
 
-    if (line.y > document.documentElement.clientHeight) {
-      line.y = -100;
+    if (line.y > gameArea.offsetHeight) {
+      line.y = -HEIGHT_ELEM;
     }
   });
 }
@@ -147,8 +189,8 @@ function moveEnemy() {
 
     item.y += settings.speed / 2;
     item.style.top = item.y + "px";
-    if (item.y >= document.documentElement.clientHeight) {
-      item.y = -100 * settings.traffic;
+    if (item.y >= gameArea.offsetHeight) {
+      item.y = -HEIGHT_ELEM * settings.traffic;
       item.style.left =
         Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
     }

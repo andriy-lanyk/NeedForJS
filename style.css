@@ -127,6 +127,11 @@ table {
   display: none;
 }
 
+.game {
+  height: 100%;
+  display: flex;
+}
+
 .car,
 .enemy {
   width: 50px;

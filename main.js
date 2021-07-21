@@ -13,12 +13,24 @@ car.classList.add("car");
 start.addEventListener("click", startGame);
 document.addEventListener("keydown", startRun);
 document.addEventListener("keyup", stopRun);
+document.addEventListener("touchstart", TouchStart); //Начало касания
+document.addEventListener("touchmove", TouchMove); //Движение пальцем по экрану
+//Пользователь отпустил экран
+document.addEventListener("touchend", TouchEnd);
+//Отмена касания
 
 const keys = {
   ArrowUp: false,
   ArrowDown: false,
   ArrowRight: false,
   ArrowLeft: false,
+};
+
+const mobileKeys = {
+  up: false,
+  down: false,
+  right: false,
+  left: false,
 };
 
 const settings = {
@@ -126,19 +138,19 @@ function playGame() {
 
     moveRoad();
     moveEnemy();
-    if (keys.ArrowLeft && settings.x > 0) {
+    if ((keys.ArrowLeft || mobileKeys.left) && settings.x > 0) {
       settings.x -= settings.speed;
     }
     let offsetX = gameArea.offsetWidth - car.offsetWidth;
-    if (keys.ArrowRight && settings.x < offsetX) {
+    if ((keys.ArrowRight || mobileKeys.right) && settings.x < offsetX) {
       settings.x += settings.speed;
     }
 
-    if (keys.ArrowUp && settings.y > 0) {
+    if ((keys.ArrowUp || mobileKeys.up) && settings.y > 0) {
       settings.y -= settings.speed;
     }
     let offsetY = gameArea.offsetHeight - car.offsetHeight;
-    if (keys.ArrowDown && settings.y < offsetY) {
+    if ((keys.ArrowDown || mobileKeys.down) && settings.y < offsetY) {
       settings.y += settings.speed;
     }
 
@@ -208,4 +220,70 @@ function moveEnemy() {
         Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
     }
   });
+}
+
+// MOBILE
+
+let touchStart = null; //Точка начала касания
+let touchPosition = null; //Текущая позиция
+
+function TouchStart(e) {
+  //Получаем текущую позицию касания;
+  touchStart = {
+    x: e.changedTouches[0].clientX,
+    y: e.changedTouches[0].clientY,
+  };
+  touchPosition = { x: touchStart.x, y: touchStart.y };
+}
+
+function TouchMove(e) {
+  //Получаем новую позицию
+  touchPosition = {
+    x: e.changedTouches[0].clientX,
+    y: e.changedTouches[0].clientY,
+  };
+  CheckAction(); //Определяем, какой жест совершил пользователь
+}
+
+function TouchEnd(e) {
+  //Очищаем позиции
+  touchStart = null;
+  touchPosition = null;
+
+  mobileKeys.left = false;
+  mobileKeys.right = false;
+  mobileKeys.right = false;
+  mobileKeys.left = false;
+}
+
+function CheckAction() {
+  let distance = {
+    x: touchStart.x - touchPosition.x,
+    y: touchStart.y - touchPosition.y,
+  };
+
+  if (Math.abs(distance.x) > Math.abs(distance.y)) {
+    //Проверяем, движение по какой оси было длиннее
+    if (distance.x > 0) {
+      //Если значение больше нуля, значит пользователь двигал пальцем справа налево
+      mobileKeys.left = true;
+      mobileKeys.right = false;
+    } //Иначе он двигал им слева направо
+    else {
+      mobileKeys.right = true;
+      mobileKeys.left = false;
+    }
+  }
+  //Аналогичные проверки для вертикальной оси
+  else {
+    if (distance.y > 0) {
+      //Свайп вверх
+      mobileKeys.up = true;
+      mobileKeys.down = false;
+    } //Свайп вниз
+    else {
+      mobileKeys.down = true;
+      mobileKeys.up = false;
+    }
+  }
 }

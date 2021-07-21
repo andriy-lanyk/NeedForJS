@@ -163,7 +163,7 @@ table {
   left: 0;
   top: 0;
   width: 100vw;
-  height: calc(8vh + 6px);
+  height: 9vh;
   margin: 0;
   padding: 1rem 0;
   text-align: center;
@@ -198,7 +198,7 @@ table {
   left: 0;
   bottom: 0;
   width: 100vw;
-  height: calc(8vh + 8px);
+  height: 9vh;
   padding: 5px 0;
   text-align: center;
   z-index: 200;

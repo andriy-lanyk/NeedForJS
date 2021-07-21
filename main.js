@@ -1,5 +1,5 @@
 const MAX_ENEMY = 7;
-const HEIGHT_ELEM = 100;
+const HEIGHT_ELEM = 75;
 const start = document.querySelector(".start");
 const game = document.querySelector(".game");
 const gameArea = document.querySelector(".gameArena");
@@ -32,6 +32,8 @@ const mobileKeys = {
   right: false,
   left: false,
 };
+
+let distance = null;
 
 const settings = {
   start: false,
@@ -106,7 +108,6 @@ function startGame(e) {
     enemy.classList.add("enemy");
 
     enemy.y = (-HEIGHT_ELEM + 20) * settings.traffic * (i + 1);
-    console.log("enemy.y: ", enemy.y);
     enemy.style.left =
       Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
     enemy.style.top = enemy.y + "px";
@@ -138,19 +139,20 @@ function playGame() {
 
     moveRoad();
     moveEnemy();
-    if ((keys.ArrowLeft || mobileKeys.left) && settings.x > 0) {
+    moveCarInMobile();
+    if (keys.ArrowLeft && settings.x > 0) {
       settings.x -= settings.speed;
     }
     let offsetX = gameArea.offsetWidth - car.offsetWidth;
-    if ((keys.ArrowRight || mobileKeys.right) && settings.x < offsetX) {
+    if (keys.ArrowRight && settings.x < offsetX) {
       settings.x += settings.speed;
     }
 
-    if ((keys.ArrowUp || mobileKeys.up) && settings.y > 0) {
+    if (keys.ArrowUp && settings.y > 0) {
       settings.y -= settings.speed;
     }
     let offsetY = gameArea.offsetHeight - car.offsetHeight;
-    if ((keys.ArrowDown || mobileKeys.down) && settings.y < offsetY) {
+    if (keys.ArrowDown && settings.y < offsetY) {
       settings.y += settings.speed;
     }
 
@@ -200,6 +202,7 @@ function moveEnemy() {
     ) {
       settings.start = false;
       music.pause();
+      TouchEnd();
       if (settings.score > settings.record) {
         localStorage.setItem("best-record", settings.score);
         alert(
@@ -247,8 +250,12 @@ function TouchMove(e) {
 
 function TouchEnd() {
   //Очищаем позиции
-  touchStart = null;
+  touchStart = {
+    x: touchPosition.x,
+    y: touchPosition.y,
+  };
   touchPosition = null;
+  distance = null;
 
   mobileKeys.left = false;
   mobileKeys.right = false;
@@ -257,33 +264,68 @@ function TouchEnd() {
 }
 
 function CheckAction() {
-  let distance = {
+  distance = {
     x: touchStart.x - touchPosition.x,
     y: touchStart.y - touchPosition.y,
   };
 
-  if (Math.abs(distance.x) > Math.abs(distance.y)) {
-    //Проверяем, движение по какой оси было длиннее
-    if (distance.x > 0) {
-      //Если значение больше нуля, значит пользователь двигал пальцем справа налево
-      mobileKeys.left = true;
-      mobileKeys.right = false;
-    } //Иначе он двигал им слева направо
-    else {
-      mobileKeys.right = true;
-      mobileKeys.left = false;
-    }
+  if (Math.floor(distance.x < 0) && Math.floor(distance.y < 0)) {
+    mobileKeys.left = false;
+    mobileKeys.right = true;
+    mobileKeys.up = false;
+    mobileKeys.down = true;
+  } else if (Math.floor(distance.x < 0) && Math.floor(distance.y > 0)) {
+    mobileKeys.left = false;
+    mobileKeys.right = true;
+    mobileKeys.up = true;
+    mobileKeys.down = false;
+  } else if (Math.floor(distance.x > 0) && Math.floor(distance.y > 0)) {
+    mobileKeys.left = true;
+    mobileKeys.right = false;
+    mobileKeys.up = true;
+    mobileKeys.down = false;
+  } else if (Math.floor(distance.x > 0) && Math.floor(distance.y < 0)) {
+    mobileKeys.left = true;
+    mobileKeys.right = false;
+    mobileKeys.up = false;
+    mobileKeys.down = true;
+  } else if (Math.floor(distance.x < 0) && Math.floor(distance.y === 0)) {
+    mobileKeys.left = false;
+    mobileKeys.right = true;
+    mobileKeys.up = false;
+    mobileKeys.down = false;
+  } else if (Math.floor(distance.x > 0) && Math.floor(distance.y === 0)) {
+    mobileKeys.left = true;
+    mobileKeys.right = false;
+    mobileKeys.up = false;
+    mobileKeys.down = false;
+  } else if (Math.floor(distance.y < 0) && Math.floor(distance.x === 0)) {
+    mobileKeys.up = false;
+    mobileKeys.down = true;
+    mobileKeys.left = false;
+    mobileKeys.right = false;
+  } else if (Math.floor(distance.y > 0) && Math.floor(distance.x === 0)) {
+    mobileKeys.up = true;
+    mobileKeys.down = false;
+    mobileKeys.left = false;
+    mobileKeys.right = false;
   }
-  //Аналогичные проверки для вертикальной оси
-  else {
-    if (distance.y > 0) {
-      //Свайп вверх
-      mobileKeys.up = true;
-      mobileKeys.down = false;
-    } //Свайп вниз
-    else {
-      mobileKeys.down = true;
-      mobileKeys.up = false;
-    }
+}
+
+function moveCarInMobile() {
+  if (mobileKeys.left && settings.x > 0) {
+    settings.x -= Math.abs(distance.x / 15);
+  }
+  let offsetX = gameArea.offsetWidth - car.offsetWidth;
+  if (mobileKeys.right && settings.x < offsetX) {
+    settings.x += Math.abs(distance.x / 15);
+  }
+
+  if (mobileKeys.up && settings.y > 0) {
+    settings.y -= Math.abs(distance.y / 15);
+  }
+  let offsetY = gameArea.offsetHeight - car.offsetHeight;
+  if (mobileKeys.down && settings.y < offsetY) {
+    settings.y += Math.abs(distance.y / 15);
   }
 }

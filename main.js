@@ -13,9 +13,12 @@ car.classList.add("car");
 start.addEventListener("click", startGame);
 document.addEventListener("keydown", startRun);
 document.addEventListener("keyup", stopRun);
-document.body.addEventListener("touchmove", function (e) {
-  e.preventDefault();
-});
+// document.body.addEventListener("touchstart", function (e) {
+//   e.preventDefault();
+// });
+// document.body.addEventListener("touchmove", function (e) {
+//   e.preventDefault();
+// });
 gameArea.addEventListener("touchstart", TouchStart); //Начало касания
 gameArea.addEventListener("touchmove", TouchMove); //Движение пальцем по экрану
 //Пользователь отпустил экран
@@ -240,6 +243,7 @@ let touchStart = null; //Точка начала касания
 let touchPosition = null; //Текущая позиция
 
 function TouchStart(e) {
+  e.preventDefault();
   //Получаем текущую позицию касания;
   touchStart = {
     x: e.changedTouches[0].clientX,
@@ -249,6 +253,7 @@ function TouchStart(e) {
 }
 
 function TouchMove(e) {
+  e.preventDefault();
   //Получаем новую позицию
   touchPosition = {
     x: e.changedTouches[0].clientX,

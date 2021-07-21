@@ -202,7 +202,7 @@ function moveEnemy() {
     ) {
       settings.start = false;
       music.pause();
-      TouchEnd();
+      resetMobileKeys();
       if (settings.score > settings.record) {
         localStorage.setItem("best-record", settings.score);
         alert(
@@ -250,13 +250,25 @@ function TouchMove(e) {
 
 function TouchEnd() {
   //Очищаем позиции
-  touchStart = {
-    x: touchPosition.x,
-    y: touchPosition.y,
-  };
+  if (settings.start) {
+    touchStart = {
+      x: touchPosition.x,
+      y: touchPosition.y,
+    };
+    touchPosition = null;
+    distance = null;
+
+    mobileKeys.left = false;
+    mobileKeys.right = false;
+    mobileKeys.up = false;
+    mobileKeys.down = false;
+  }
+}
+
+function resetMobileKeys() {
+  touchStart = null;
   touchPosition = null;
   distance = null;
-
   mobileKeys.left = false;
   mobileKeys.right = false;
   mobileKeys.up = false;
@@ -264,51 +276,53 @@ function TouchEnd() {
 }
 
 function CheckAction() {
-  distance = {
-    x: touchStart.x - touchPosition.x,
-    y: touchStart.y - touchPosition.y,
-  };
+  if (settings.start) {
+    distance = {
+      x: touchStart.x - touchPosition.x,
+      y: touchStart.y - touchPosition.y,
+    };
 
-  if (Math.floor(distance.x < 0) && Math.floor(distance.y < 0)) {
-    mobileKeys.left = false;
-    mobileKeys.right = true;
-    mobileKeys.up = false;
-    mobileKeys.down = true;
-  } else if (Math.floor(distance.x < 0) && Math.floor(distance.y > 0)) {
-    mobileKeys.left = false;
-    mobileKeys.right = true;
-    mobileKeys.up = true;
-    mobileKeys.down = false;
-  } else if (Math.floor(distance.x > 0) && Math.floor(distance.y > 0)) {
-    mobileKeys.left = true;
-    mobileKeys.right = false;
-    mobileKeys.up = true;
-    mobileKeys.down = false;
-  } else if (Math.floor(distance.x > 0) && Math.floor(distance.y < 0)) {
-    mobileKeys.left = true;
-    mobileKeys.right = false;
-    mobileKeys.up = false;
-    mobileKeys.down = true;
-  } else if (Math.floor(distance.x < 0) && Math.floor(distance.y === 0)) {
-    mobileKeys.left = false;
-    mobileKeys.right = true;
-    mobileKeys.up = false;
-    mobileKeys.down = false;
-  } else if (Math.floor(distance.x > 0) && Math.floor(distance.y === 0)) {
-    mobileKeys.left = true;
-    mobileKeys.right = false;
-    mobileKeys.up = false;
-    mobileKeys.down = false;
-  } else if (Math.floor(distance.y < 0) && Math.floor(distance.x === 0)) {
-    mobileKeys.up = false;
-    mobileKeys.down = true;
-    mobileKeys.left = false;
-    mobileKeys.right = false;
-  } else if (Math.floor(distance.y > 0) && Math.floor(distance.x === 0)) {
-    mobileKeys.up = true;
-    mobileKeys.down = false;
-    mobileKeys.left = false;
-    mobileKeys.right = false;
+    if (Math.floor(distance.x < 0) && Math.floor(distance.y < 0)) {
+      mobileKeys.left = false;
+      mobileKeys.right = true;
+      mobileKeys.up = false;
+      mobileKeys.down = true;
+    } else if (Math.floor(distance.x < 0) && Math.floor(distance.y > 0)) {
+      mobileKeys.left = false;
+      mobileKeys.right = true;
+      mobileKeys.up = true;
+      mobileKeys.down = false;
+    } else if (Math.floor(distance.x > 0) && Math.floor(distance.y > 0)) {
+      mobileKeys.left = true;
+      mobileKeys.right = false;
+      mobileKeys.up = true;
+      mobileKeys.down = false;
+    } else if (Math.floor(distance.x > 0) && Math.floor(distance.y < 0)) {
+      mobileKeys.left = true;
+      mobileKeys.right = false;
+      mobileKeys.up = false;
+      mobileKeys.down = true;
+    } else if (Math.floor(distance.x < 0) && Math.floor(distance.y === 0)) {
+      mobileKeys.left = false;
+      mobileKeys.right = true;
+      mobileKeys.up = false;
+      mobileKeys.down = false;
+    } else if (Math.floor(distance.x > 0) && Math.floor(distance.y === 0)) {
+      mobileKeys.left = true;
+      mobileKeys.right = false;
+      mobileKeys.up = false;
+      mobileKeys.down = false;
+    } else if (Math.floor(distance.y < 0) && Math.floor(distance.x === 0)) {
+      mobileKeys.up = false;
+      mobileKeys.down = true;
+      mobileKeys.left = false;
+      mobileKeys.right = false;
+    } else if (Math.floor(distance.y > 0) && Math.floor(distance.x === 0)) {
+      mobileKeys.up = true;
+      mobileKeys.down = false;
+      mobileKeys.left = false;
+      mobileKeys.right = false;
+    }
   }
 }
 

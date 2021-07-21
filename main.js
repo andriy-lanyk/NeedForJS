@@ -236,8 +236,8 @@ function moveEnemy() {
 
 // MOBILE
 
-let touchStart = null; //Точка начала касания
-let touchPosition = null; //Текущая позиция
+let touchStart = null;
+let touchPosition = null;
 
 function TouchStart(e) {
   e.preventDefault();

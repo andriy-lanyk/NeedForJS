@@ -34,15 +34,15 @@ let startSpeed = 0;
 function changeLevel(lvl) {
   switch (lvl) {
     case "1":
-      settings.traffic = 4;
+      settings.traffic = 5;
       settings.speed = 3;
       break;
     case "2":
-      settings.traffic = 3;
+      settings.traffic = 4;
       settings.speed = 4;
       break;
     case "3":
-      settings.traffic = 2.5;
+      settings.traffic = 4;
       settings.speed = 5;
       break;
   }

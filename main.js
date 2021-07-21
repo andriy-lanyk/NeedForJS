@@ -1,5 +1,8 @@
 const MAX_ENEMY = 7;
-const HEIGHT_ELEM = 80;
+let HEIGHT_ELEM = 100;
+if (innerWidth <= 768) {
+  HEIGHT_ELEM = 80;
+}
 const start = document.querySelector(".start");
 const game = document.querySelector(".game");
 const gameArea = document.querySelector(".gameArena");
@@ -13,12 +16,6 @@ car.classList.add("car");
 start.addEventListener("click", startGame);
 document.addEventListener("keydown", startRun);
 document.addEventListener("keyup", stopRun);
-// document.body.addEventListener("touchstart", function (e) {
-//   e.preventDefault();
-// });
-// document.body.addEventListener("touchmove", function (e) {
-//   e.preventDefault();
-// });
 gameArea.addEventListener("touchstart", TouchStart); //Начало касания
 gameArea.addEventListener("touchmove", TouchMove); //Движение пальцем по экрану
 //Пользователь отпустил экран

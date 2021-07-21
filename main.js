@@ -202,7 +202,7 @@ function moveEnemy() {
     ) {
       settings.start = false;
       music.pause();
-      resetMobileKeys();
+      TouchEnd();
       if (settings.score > settings.record) {
         localStorage.setItem("best-record", settings.score);
         alert(
@@ -255,20 +255,10 @@ function TouchEnd() {
       x: touchPosition.x,
       y: touchPosition.y,
     };
-    touchPosition = null;
-    distance = null;
-
-    mobileKeys.left = false;
-    mobileKeys.right = false;
-    mobileKeys.up = false;
-    mobileKeys.down = false;
   }
-}
-
-function resetMobileKeys() {
-  touchStart = null;
   touchPosition = null;
   distance = null;
+
   mobileKeys.left = false;
   mobileKeys.right = false;
   mobileKeys.up = false;

@@ -155,7 +155,12 @@ function playGame() {
     if (keys.ArrowUp && settings.y > 0) {
       settings.y -= settings.speed;
     }
-    let offsetY = gameArea.offsetHeight - car.offsetHeight;
+    let offsetY = null;
+    if (innerWidth <= 768) {
+      offsetY = gameArea.offsetHeight - car.offsetHeight + 50;
+    } else {
+      offsetY = gameArea.offsetHeight - car.offsetHeight;
+    }
     if (keys.ArrowDown && settings.y < offsetY) {
       settings.y += settings.speed;
     }

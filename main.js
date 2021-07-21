@@ -123,7 +123,11 @@ function startGame(e) {
   let carLeftSettings = gameArea.offsetWidth / 2 - car.offsetWidth / 2;
   car.style.left = carLeftSettings + "px";
   car.style.top = "auto";
-  car.style.bottom = "10px";
+  if (innerWidth <= 768) {
+    car.style.bottom = "50px";
+  } else {
+    car.style.bottom = "10px";
+  }
   settings.x = car.offsetLeft;
   settings.y = car.offsetTop;
   requestAnimationFrame(playGame);

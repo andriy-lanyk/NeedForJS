@@ -143,7 +143,7 @@ table {
 
 .gameArena {
   position: relative;
-  margin: 9vh auto;
+  margin: 9vh auto 0;
   width: 300px;
   height: 82vh;
   background: #222;

@@ -34,6 +34,8 @@ const mobileKeys = {
 };
 
 let distance = null;
+let offsetY = null;
+let offsetX = null;
 
 const settings = {
   start: false,
@@ -147,7 +149,7 @@ function playGame() {
     if (keys.ArrowLeft && settings.x > 0) {
       settings.x -= settings.speed;
     }
-    let offsetX = gameArea.offsetWidth - car.offsetWidth;
+    offsetX = gameArea.offsetWidth - car.offsetWidth;
     if (keys.ArrowRight && settings.x < offsetX) {
       settings.x += settings.speed;
     }
@@ -155,12 +157,7 @@ function playGame() {
     if (keys.ArrowUp && settings.y > 0) {
       settings.y -= settings.speed;
     }
-    let offsetY = null;
-    if (innerWidth <= 768) {
-      offsetY = gameArea.offsetHeight - car.offsetHeight + 50;
-    } else {
-      offsetY = gameArea.offsetHeight - car.offsetHeight;
-    }
+    offsetY = gameArea.offsetHeight - car.offsetHeight;
     if (keys.ArrowDown && settings.y < offsetY) {
       settings.y += settings.speed;
     }
@@ -329,7 +326,7 @@ function moveCarInMobile() {
   if (mobileKeys.left && settings.x > 0) {
     settings.x -= Math.abs(distance.x / 15);
   }
-  let offsetX = gameArea.offsetWidth - car.offsetWidth;
+  offsetX = gameArea.offsetWidth - car.offsetWidth;
   if (mobileKeys.right && settings.x < offsetX) {
     settings.x += Math.abs(distance.x / 15);
   }
@@ -337,7 +334,7 @@ function moveCarInMobile() {
   if (mobileKeys.up && settings.y > 0) {
     settings.y -= Math.abs(distance.y / 15);
   }
-  let offsetY = gameArea.offsetHeight - car.offsetHeight;
+  offsetY = gameArea.offsetHeight - car.offsetHeight;
   if (mobileKeys.down && settings.y < offsetY) {
     settings.y += Math.abs(distance.y / 15);
   }

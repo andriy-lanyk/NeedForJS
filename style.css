@@ -142,12 +142,11 @@ table {
 }
 
 .gameArena {
-  position: absolute;
+  position: relative;
   left: 0;
   top: 9vh;
   width: 300px;
   height: 82vh;
-  position: relative;
   margin: auto;
   background: #222;
   overflow: hidden;

@@ -131,6 +131,13 @@ table {
 .game {
   height: 100vh;
   display: flex;
+  background: linear-gradient(
+    to left,
+    green,
+    #69400d 8%,
+    #69400d 92%,
+    green 100%
+  );
 }
 
 .car,

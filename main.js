@@ -1,5 +1,5 @@
 const MAX_ENEMY = 7;
-const HEIGHT_ELEM = 75;
+const HEIGHT_ELEM = 80;
 const start = document.querySelector(".start");
 const game = document.querySelector(".game");
 const gameArea = document.querySelector(".gameArena");

@@ -13,10 +13,10 @@ car.classList.add("car");
 start.addEventListener("click", startGame);
 document.addEventListener("keydown", startRun);
 document.addEventListener("keyup", stopRun);
-document.addEventListener("touchstart", TouchStart); //Начало касания
-document.addEventListener("touchmove", TouchMove); //Движение пальцем по экрану
+gameArea.addEventListener("touchstart", TouchStart); //Начало касания
+gameArea.addEventListener("touchmove", TouchMove); //Движение пальцем по экрану
 //Пользователь отпустил экран
-document.addEventListener("touchend", TouchEnd);
+gameArea.addEventListener("touchend", TouchEnd);
 //Отмена касания
 
 const keys = {
@@ -245,15 +245,15 @@ function TouchMove(e) {
   CheckAction(); //Определяем, какой жест совершил пользователь
 }
 
-function TouchEnd(e) {
+function TouchEnd() {
   //Очищаем позиции
   touchStart = null;
   touchPosition = null;
 
   mobileKeys.left = false;
   mobileKeys.right = false;
-  mobileKeys.right = false;
-  mobileKeys.left = false;
+  mobileKeys.up = false;
+  mobileKeys.down = false;
 }
 
 function CheckAction() {

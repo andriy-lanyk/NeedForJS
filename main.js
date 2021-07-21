@@ -88,10 +88,10 @@ function startGame(e) {
   music.play();
   music.volume = 0.1;
 
-  gameArea.style.minHeight =
-    Math.floor(
-      (document.documentElement.clientHeight - HEIGHT_ELEM) / HEIGHT_ELEM
-    ) * HEIGHT_ELEM;
+  // gameArea.style.minHeight =
+  //   Math.floor(
+  //     (document.documentElement.clientHeight - HEIGHT_ELEM) / HEIGHT_ELEM
+  //   ) * HEIGHT_ELEM;
 
   startButtons.forEach((btn) => (btn.disabled = true));
   gameArea.innerHTML = "";

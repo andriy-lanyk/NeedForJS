@@ -143,8 +143,7 @@ table {
 
 .gameArena {
   position: relative;
-  left: 0;
-  top: 9vh;
+  top: calc(9vh);
   width: 300px;
   height: 82vh;
   margin: auto;
@@ -155,7 +154,7 @@ table {
 .line {
   position: absolute;
   width: 10px;
-  height: 50px;
+  height: 40px;
   background: #fff;
   left: 145px;
 }

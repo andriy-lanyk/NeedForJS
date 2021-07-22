@@ -131,7 +131,7 @@ table {
 }
 
 .game {
-  /* height: 100vh; */
+  max-height: 100vh;
   display: flex;
   background: linear-gradient(
     to left,

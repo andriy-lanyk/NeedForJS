@@ -106,7 +106,6 @@ body {
   bottom: 0;
   right: 0;
   left: 0;
-  height: 100vh;
   line-height: 1;
   overflow: hidden;
 }
@@ -131,7 +130,7 @@ table {
 }
 
 html {
-  height: 100vh;
+  height: 100%;
 }
 
 .hidden {
@@ -140,7 +139,7 @@ html {
 
 .game {
   position: relative;
-  height: 100vh;
+  height: 100%;
   display: flex;
   background: linear-gradient(
     to left,

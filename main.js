@@ -14,6 +14,7 @@ const music = new Audio("audio.mp3");
 const car = document.createElement("div");
 car.classList.add("car");
 
+document.body.style.height = window.innerHeight;
 document.body.addEventListener("touchstart", function (e) {
   e.preventDefault();
 });

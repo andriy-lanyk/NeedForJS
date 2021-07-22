@@ -17,6 +17,13 @@ const music = new Audio("audio.mp3");
 const car = document.createElement("div");
 car.classList.add("car");
 
+document.body.addEventListener("touchstart", function (e) {
+  e.preventDefault();
+});
+document.body.addEventListener("touchmove", function (e) {
+  e.preventDefault();
+});
+
 start.addEventListener("click", startGame);
 document.addEventListener("keydown", startRun);
 document.addEventListener("keyup", stopRun);

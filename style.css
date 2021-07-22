@@ -102,7 +102,7 @@ section {
 }
 body {
   position: relative;
-  max-height: 100vh;
+  height: 100vh;
   line-height: 1;
   overflow: hidden;
 }
@@ -126,12 +126,16 @@ table {
   border-spacing: 0;
 }
 
+html {
+  height: 100vh;
+}
+
 .hidden {
   display: none;
 }
 
 .game {
-  max-height: 100vh;
+  height: 100vh;
   display: flex;
   background: linear-gradient(
     to left,

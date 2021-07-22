@@ -101,7 +101,9 @@ section {
   display: block;
 }
 body {
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   height: 100vh;
   line-height: 1;
   overflow: hidden;

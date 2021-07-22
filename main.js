@@ -4,9 +4,6 @@ if (innerWidth <= 768) {
   HEIGHT_ELEM = 80;
 }
 
-console.dir(document);
-console.dir(document.body);
-
 const start = document.querySelector(".start");
 const game = document.querySelector(".game");
 const gameArea = document.querySelector(".gameArena");

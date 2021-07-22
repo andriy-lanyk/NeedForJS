@@ -15,12 +15,12 @@ const car = document.createElement("div");
 car.classList.add("car");
 
 document.body.style.height = window.innerHeight;
-document.body.addEventListener("touchstart", function (e) {
-  e.preventDefault();
-});
-document.body.addEventListener("touchmove", function (e) {
-  e.preventDefault();
-});
+// document.body.addEventListener("touchstart", function (e) {
+//   e.preventDefault();
+// });
+// document.body.addEventListener("touchmove", function (e) {
+//   e.preventDefault();
+// });
 
 start.addEventListener("click", startGame);
 document.addEventListener("keydown", startRun);
@@ -249,7 +249,7 @@ let touchStart = null;
 let touchPosition = null;
 
 function TouchStart(e) {
-  e.preventDefault();
+  // e.preventDefault();
   //Получаем текущую позицию касания;
   touchStart = {
     x: e.changedTouches[0].clientX,
@@ -259,7 +259,7 @@ function TouchStart(e) {
 }
 
 function TouchMove(e) {
-  e.preventDefault();
+  // e.preventDefault();
   //Получаем новую позицию
   touchPosition = {
     x: e.changedTouches[0].clientX,

@@ -102,6 +102,7 @@ section {
 }
 body {
   position: relative;
+  max-height: 100vh;
   line-height: 1;
   overflow: hidden;
 }
@@ -130,7 +131,7 @@ table {
 }
 
 .game {
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   background: linear-gradient(
     to left,

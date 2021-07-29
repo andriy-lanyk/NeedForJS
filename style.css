@@ -158,6 +158,14 @@ html {
   position: absolute;
 }
 
+@media screen and (max-width: 768px) {
+  .car,
+  .enemy {
+    width: 40px;
+    height: 80px;
+  }
+}
+
 .gameArena {
   position: relative;
   margin: auto;
